@@ -6,5 +6,5 @@ export interface Chat {
   editable: boolean;
   sender: string;
   text: string;
-  user: User;
+  users: User;
 }

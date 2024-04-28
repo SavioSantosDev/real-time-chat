@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment.dev';
 import { Chat } from '@interfaces/chat.interface';
 import { createClient } from '@supabase/supabase-js';
-import { Observable, from, map, switchMap } from 'rxjs';
+import { Observable, from, map, startWith, switchMap } from 'rxjs';
 
 const CHAT_TABLE_NAME = 'chat';
 
@@ -14,16 +14,29 @@ export class ChatService {
 
   listChat(): Observable<Chat[] | null> {
     return this.fromTableChanges().pipe(
+      startWith(undefined),
       switchMap(() => from(this.supabase.from(CHAT_TABLE_NAME).select('*,users(*)'))),
       map(({ data }) => data)
     );
   }
 
   private fromTableChanges(): Observable<unknown> {
+    console.log('teste');
+    this.supabase
+      .channel('chat')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'chat' }, data => {
+        console.log(data);
+      })
+      .subscribe();
+
     return new Observable(observer => {
       this.supabase
         .channel(CHAT_TABLE_NAME)
-        .on('postgres_changes', { event: '*', schema: 'public', table: CHAT_TABLE_NAME }, data => observer.next(data));
+        .on('postgres_changes', { event: '*', schema: 'public', table: CHAT_TABLE_NAME }, data => {
+          console.log(data);
+          observer.next(data);
+        })
+        .subscribe();
     });
   }
 

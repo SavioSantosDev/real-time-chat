@@ -1,1 +1,36 @@
-<p>chat works!</p>
+<div class="min-h-dvh flex">
+  <nav class="flex flex-col gap-8 justify-end bg-gray-800 text-gray-400">
+    <button class="py-4 px-8 flex-col">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+        <path
+          fill-rule="evenodd"
+          d="M16.5 3.75a1.5 1.5 0 0 1 1.5 1.5v13.5a1.5 1.5 0 0 1-1.5 1.5h-6a1.5 1.5 0 0 1-1.5-1.5V15a.75.75 0 0 0-1.5 0v3.75a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V5.25a3 3 0 0 0-3-3h-6a3 3 0 0 0-3 3V9A.75.75 0 1 0 9 9V5.25a1.5 1.5 0 0 1 1.5-1.5h6ZM5.78 8.47a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 0 0 0 1.06l3 3a.75.75 0 0 0 1.06-1.06l-1.72-1.72H15a.75.75 0 0 0 0-1.5H4.06l1.72-1.72a.75.75 0 0 0 0-1.06Z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <small>Sair</small>
+    </button>
+  </nav>
+
+  <section class="">
+    <header>
+      <h1>Real time chat</h1>
+    </header>
+
+    <div class="p-8 border-black border-2 flex flex-col gap-8">
+      @for (chat of items$ | async; track chat.id) {
+      <article class="flex gap-5">
+        <img [src]="chat.users.avatar_url" [alt]="chat.users.full_name" />
+        <h2>{{ chat.users.full_name }}</h2>
+        <p>{{ chat.text }}</p>
+      </article>
+      } @empty { Nenhuma mensagem enviada. }
+    </div>
+
+    <form [formGroup]="formGroup" (ngSubmit)="sendMessage()">
+      <input type="text" formControlName="message" />
+
+      <button>Enviar</button>
+    </form>
+  </section>
+</div>
