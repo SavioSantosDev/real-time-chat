@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
+import { environment } from '@environments/environment.dev';
 import { Chat } from '@interfaces/chat.interface';
 import { createClient } from '@supabase/supabase-js';
 import { Observable, from, map, switchMap } from 'rxjs';
-import { environment } from 'src/environments/environment.dev';
 
 const CHAT_TABLE_NAME = 'chat';
 

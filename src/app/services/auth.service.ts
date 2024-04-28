@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '@environments/environment.dev';
 import { createClient } from '@supabase/supabase-js';
 import { Observable, from, map } from 'rxjs';
-import { environment } from 'src/environments/environment.dev';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
