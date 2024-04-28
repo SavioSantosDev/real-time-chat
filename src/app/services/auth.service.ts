@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '@environments/environment.dev';
 import { createClient } from '@supabase/supabase-js';
+import { LocalStorageUtil } from '@utils/local-storage.util';
 import { Observable, from, map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -11,7 +12,7 @@ export class AuthService {
   constructor(private readonly router: Router) {
     this.supabase.auth.onAuthStateChange((_, session) => {
       if (session?.user) {
-        localStorage.setItem('userSession', JSON.stringify(session.user));
+        LocalStorageUtil.setUserSession(session.user);
         this.router.navigate(['chat']);
       }
     });
