@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChatService } from '@services/chat.service';
@@ -6,7 +6,7 @@ import { ChatService } from '@services/chat.service';
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [AsyncPipe, ReactiveFormsModule],
+  imports: [AsyncPipe, ReactiveFormsModule, DatePipe],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
